@@ -11,7 +11,7 @@ const App = () => {
   const [emailJobs, setEmailJobs] = useState([]);
   const [currentEmailJob, setCurrentEmailJob] = useState();
   const [completedEmailJobs, setCompletedEmailJobs] = useState([]);
-  const [userId, setUserId] = useState('1');
+  const [userId, setUserId] = useState();
 
   useEffect(() => {
     const userIdParam = query.get('userid');
@@ -52,7 +52,7 @@ const App = () => {
     socket.on('disconnect', () => {
       console.log('Socket.IO connection closed.');
     });
- 
+
     return () => {
       socket.close();
     };
@@ -81,10 +81,19 @@ const App = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 items-center justify-center">
-      <div className="flex justify-center items-center gap-5 w-full">
-        <h1 className="mb-2 text-2xl font-bold tracking-tight text-white ">Current User</h1>
-        <h1 className="mb-2 text-2xl font-bold tracking-tight text-white ">{userId}</h1>
-      </div>
+
+      {userId ?
+        (
+          <div className="flex justify-center items-center gap-5 w-full">
+            <h1 className="mb-2 text-2xl font-bold tracking-tight text-white ">Current User</h1>
+            <h1 className="mb-2 text-2xl font-bold tracking-tight text-white ">{userId}</h1>
+          </div>
+        ) : (
+          <div className="flex justify-center items-center gap-5 w-full">
+            <a href='http://localhost:3000/?userid=1' className="mb-2 text-2xl font-bold tracking-tight text-red-500 ">Go to a valid page </a>
+          </div>
+        )}
+
       <div className='m-10 flex items-center flex-col justify-space-around'>
         <div className="bg-white p-8 rounded-lg shadow-lg">
           <h1 className="text-4xl font-bold mb-4 text-center">Email Job Submission</h1>
@@ -103,7 +112,7 @@ const App = () => {
 
         </div>
         <div className="w-96 m-4 text-center flex flex-col gap-5 p-6 justify-center items-center">
-        {currentEmailJob ? <h1 className="mb-2 text-4xl font-bold tracking-tight text-purple-800 ">Current</h1> : null}
+          {currentEmailJob ? <h1 className="mb-2 text-4xl font-bold tracking-tight text-purple-800 ">Current</h1> : null}
           {currentEmailJob ?
             <div className="flex flex-col items-center gap-5 bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100">
               <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 flex justify-between">{currentEmailJob.status}</h1>
@@ -129,7 +138,7 @@ const App = () => {
               </div>
             </div> : null}
 
-            {emailJobs.length > 0 ? <h1 className="mb-2 text-4xl font-bold tracking-tight text-purple-800 ">Queue</h1> : null}
+          {emailJobs.length > 0 ? <h1 className="mb-2 text-4xl font-bold tracking-tight text-purple-800 ">Queue</h1> : null}
           {emailJobs.length > 0 ? emailJobs.map((ele, index) => (
             <div className='flex flex-col items-center  max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100' key={index}>
               <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 flex justify-between">{ele.status}</h1>
@@ -156,7 +165,7 @@ const App = () => {
             </div>
           ))
             : null}
-          
+
           {completedEmailJobs.length > 0 ? <h1 className="mb-2 text-4xl font-bold tracking-tight text-purple-800 ">Completed</h1> : null}
           {completedEmailJobs.length > 0 ? completedEmailJobs.map((ele, index) => (
             <div className='flex flex-col items-center  max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100' key={index}>
