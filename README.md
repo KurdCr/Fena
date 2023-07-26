@@ -34,6 +34,7 @@ To run locally, follow these steps:
 3. In the root folder, run the following command to start the services using Docker Compose:
 
 ```bash
+docker-compose build
 docker-compose up
 ```
 
