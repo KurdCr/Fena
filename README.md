@@ -1,6 +1,6 @@
 # FENA - Task
 
-The task is to create an efficient email sending system with real-time updates. The process involves implementing a simple frontend with an input box for specifying the number of emails to send. Upon triggering the process, the backend responds with a unique job ID and adds the job to a message queue. Workers process the jobs, simulating email sending, while the user's browser receives real-time updates on the email sending status. Users can check the job status even after closing their browsers.
+The task is to create an email-sending system with real-time updates. The process involves implementing a simple front with an input box for specifying the number of emails to send. Upon triggering the process, the backend responds with a unique job ID and adds the job to a message queue. Workers process the jobs, simulating email sending, while the user's browser receives real-time updates on the email sending status. Users can check the job status even after closing their browsers.
 
 ## Table of Contents
 
@@ -21,6 +21,9 @@ The task is to create an efficient email sending system with real-time updates. 
 - Queue: Kafka
 - Database: MySQL
 - WebSockets for real-time updates
+
+![Fena](https://github.com/KurdCr/Fena/assets/56204590/2cc97bc4-2a42-42cb-8d79-db619f1213ea)
+https://drive.google.com/file/d/1TeVvo5QU7ePnAq41UEkLB--7ZaSLad8o/view?usp=sharing
 
 ## Installation
 
@@ -47,15 +50,15 @@ Once the application is up and running, you can access it by navigating to `http
 
 1. On the homepage, you'll find an input box where you can specify the number of emails you want to send.
 2. Enter the desired number and click the "Send" button.
-3. The `API Gateway` will receive the POST request and create an `EmailJob` in the database while producing a 'send_emails' event through Kafka.
-4. The `email microservice` listens for 'send_emails' events and starts processing the `EmailJob`.
-5. The processing currently simulates sending emails by waiting 1 second for each email and updating the `EmailJob` status in the database. The actual email sending part is commented out for now.
+3. The `API Gateway` will receive the POST request and create an `EmailJob` in the database while producing a `send_emails` event through Kafka.
+4. The `email microservice` listens for `send_emails` events and starts processing the `EmailJob`.
+5. The processing currently simulates sending emails by waiting 1 second for each email, updating the `EmailJob` status in the database, and producing a 'emailJob_updates' event through Kafka which the `API Gateway` will consume. The actual email-sending part is commented out for now.
 6. While processing, the `API Gateway` will update the connected users' browsers in real-time using WebSockets, showing the status of how many emails are sent.
 7. Users can close their browsers and come back later to see the status of their job.
 
 ## API Endpoints
 
-- `POST /email/send-emails`: Sends a request to trigger the email sending process. Requires a JSON body with `userId` (string) and `numberOfEmails` (number).
+- `POST /email/send-emails`: Sends a request to trigger the email-sending process. Requires a JSON body with `userId` (string) and `numberOfEmails` (number).
 
 - `GET /email/:userId`: Retrieves all `EmailJobs` currently in the queue for the specified user.
 
@@ -83,7 +86,7 @@ Docker has been used to connect the services, including the  `API Gateway`, `ema
 
 - Dead Letter Queue (DLQ): A DLQ, or dead letter queue, has been implemented to save events in case of service failure. The DLQ is stored in the database. As of now, the application does not use the DLQs from the database; how it is handled will depend on the specific code implementation.
 
-- Kafka producer and consumer: The Kafka producer and consumer have been set up in a way that allows easy configuration for various purposes beyond the current email sending functionality. This flexibility ensures they can be adapted for other use cases if needed.
+- Kafka producer and consumer: The Kafka producer and consumer have been set up in a way that allows easy configuration for various purposes beyond the current email-sending functionality. This flexibility ensures they can be adapted for other use cases if needed.
 
 ## Improvements
 
