@@ -22,7 +22,7 @@ The task is to create an email-sending system with real-time updates. The proces
 - Database: MySQL
 - WebSockets for real-time updates
 
-![Fena](https://github.com/KurdCr/Fena/assets/56204590/2cc97bc4-2a42-42cb-8d79-db619f1213ea)
+![Fena](https://github.com/KurdCr/Fena/assets/56204590/19419427-2981-45d2-a123-d3f2008f580c)
 https://drive.google.com/file/d/1TeVvo5QU7ePnAq41UEkLB--7ZaSLad8o/view?usp=sharing
 
 ## Installation
