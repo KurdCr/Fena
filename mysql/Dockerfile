@@ -1,0 +1,9 @@
+# Dockerfile for MySQL
+FROM mysql:5.7  
+
+ENV MYSQL_ROOT_PASSWORD=password
+ENV MYSQL_DATABASE=fena
+ENV MYSQL_USER=balen
+ENV MYSQL_PASSWORD=fenabalen
+
+EXPOSE 3306
